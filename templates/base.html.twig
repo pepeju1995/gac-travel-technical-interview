@@ -23,7 +23,15 @@
             </div>
         </div>
         <!-- loader END -->
-        {% block body %}{% endblock %}
+
+        <div class="wrapper">  
+            {% if app.request.getPathInfo() not in ['/login','/register'] %}
+                {{ include('layout.html.twig') }}
+            {% endif %}
+
+            {% block body %}{% endblock %}
+        </div>
+
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
             <!-- Backend Bundle JavaScript -->

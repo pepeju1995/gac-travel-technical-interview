@@ -1,4 +1,20 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_start(registrationForm) }}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="floating-label form-group">
+                {{ form_widget(registrationForm.username, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_label(registrationForm.username, 'Usuario') }}
+            </div>
+            <div class="floating-label form-group">
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_label(registrationForm.plainPassword, 'Contraseña') }}
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear cuenta</button>
+
+    <p class="mt-3">
+        ¿Ya tienes una cuenta? <a href="{{ path('app_login') }}" class="text-primary">Accede a Stockify</a>
+    </p>
+{{ form_end(registrationForm) }}

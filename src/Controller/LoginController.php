@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,15 +19,17 @@ class LoginController extends AbstractController
         // Ultimo usuario
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('login/index.html.twig', [
+        $form = $this->createForm(LoginType::class);
+        return $this->renderForm('login/index.html.twig', [
+            'loginForm' => $form,
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
-    #[Route('/index', name: 'app_index')]
+    #[Route('/success', name: 'app_success')]
     public function success() : Response
     {
-        return $this->render('login/success.html.twig');
+        return $this->render('success.html.twig');
     }
 }

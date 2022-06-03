@@ -21,9 +21,12 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            logout:
+                path: app_logout
             form_login:
-                login_path: login
-                check_path: login
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Products;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,10 +13,17 @@ class ProductsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('created_at')
-            ->add('stock')
-            ->add('category_id')
+            ->add('name', null, [
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('category_id', ChoiceType::class, [
+                'choices' => $options['categories'],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         ;
     }
 
@@ -23,6 +31,7 @@ class ProductsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Products::class,
+            'categories' => null,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use DateTimeImmutable;
 use App\Form\CategoriesType;
 use App\Repository\CategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,6 +30,7 @@ class CategoriesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $category->setCreatedAt(new DateTimeImmutable());
             $categoriesRepository->add($category);
             return $this->redirectToRoute('app_categories_index', [], Response::HTTP_SEE_OTHER);
         }

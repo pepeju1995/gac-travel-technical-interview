@@ -3,4 +3,4 @@ app_logout:
     methods: GET
 index:
     path: /
-    controller: App\Controller\ProductsController::index
+    controller: App\Controller\LoginController::success

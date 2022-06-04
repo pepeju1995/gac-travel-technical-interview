@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use App\Entity\Products;
 use App\Form\ProductsType;
+use App\Repository\CategoriesRepository;
 use App\Repository\ProductsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/products')]
 class ProductsController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/', name: 'app_products_index', methods: ['GET'])]
     public function index(ProductsRepository $productsRepository): Response
     {
         return $this->render('products/index.html.twig', [
@@ -22,13 +24,20 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_products_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductsRepository $productsRepository): Response
+    public function new(Request $request, ProductsRepository $productsRepository, CategoriesRepository $categoriesRepository): Response
     {
+        $cats = $categoriesRepository->findAll();
+        $categories = array();
+        $categories[''] = 0;
+        foreach($cats as $category){
+            $categories[$category->getName()] = $category->getId();
+        }
         $product = new Products();
-        $form = $this->createForm(ProductsType::class, $product);
+        $form = $this->createForm(ProductsType::class, $product, ['categories' => $categories]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setCategoryId($form->get('category_id')->getData());
             $productsRepository->add($product);
             return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
         }

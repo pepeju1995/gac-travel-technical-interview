@@ -6,15 +6,25 @@
                 {{ form_label(registrationForm.username, 'Usuario') }}
             </div>
             <div class="floating-label form-group">
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
                 {{ form_label(registrationForm.plainPassword, 'Contraseña') }}
+            </div>
+            <div class="floating-label form-group">
+                {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_label(registrationForm.plainPassword, 'Repite la contraseña') }}
             </div>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Crear cuenta</button>
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Crear usuario') }}</button>
 
-    <p class="mt-3">
-        ¿Ya tienes una cuenta? <a href="{{ path('app_login') }}" class="text-primary">Accede a Stockify</a>
-    </p>
+    {% if button_label == 'Actualizar' %}
+        <p class="mt-3">
+            Vuelve a ver tus <a href="{{ path('app_products_index') }}" class="primary"> productos</a>
+        </p>
+    {% else %}
+        <p class="mt-3">
+            ¿Ya tienes una cuenta? <a href="{{ path('app_login') }}" class="text-primary">Accede a Stockify</a>
+        </p>
+    {% endif %}
 {{ form_end(registrationForm) }}

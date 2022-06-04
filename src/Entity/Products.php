@@ -67,7 +67,7 @@ class Products
         return $this;
     }
 
-    public function getCategoryId(): ?Categories
+    public function getCategoryId(): ?int
     {
         return $this->category_id;
     }

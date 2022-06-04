@@ -1,14 +1,16 @@
-{{ form_start(loginForm) }}
+{{ form_start(loginForm, {'action': path('app_login'), 'method': 'POST'}) }}
     <div class="row">
         <div class="col-lg-12">
             <div class="floating-label form-group">
-                {{ form_widget(loginForm.username, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_widget(loginForm.username, {'full_name': '_username'}) }}
                 {{ form_label(loginForm.username, 'Usuario') }}
             </div>
             <div class="floating-label form-group">
-                {{ form_widget(loginForm.password, {'attr': {'class': 'floating-input form-control', 'placeholder': ''}}) }}
+                {{ form_widget(loginForm.password, {'full_name': '_password'}) }}
                 {{ form_label(loginForm.password, 'Contraseña') }}
             </div>
+            {{ form_widget(loginForm.rememberMe, {'full_name': '_remember_me', 'id': 'remember_me'}) }}
+            {{ form_label(loginForm.rememberMe) }}
         </div>
     </div>
 

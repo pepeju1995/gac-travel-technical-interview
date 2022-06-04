@@ -28,6 +28,7 @@ class LoginType extends AbstractType
             ])
             ->add('rememberMe', CheckboxType::class, [
                 'label' => 'Mantener mi sesion activa',
+                'required' => false
             ])
         ;
     }

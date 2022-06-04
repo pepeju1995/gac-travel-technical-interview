@@ -7,6 +7,7 @@ use App\Entity\Products;
 use App\Form\ProductsType;
 use App\Repository\CategoriesRepository;
 use App\Repository\ProductsRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,14 +31,15 @@ class ProductsController extends AbstractController
         $categories = array();
         $categories[''] = 0;
         foreach($cats as $category){
-            $categories[$category->getName()] = $category->getId();
+            $categories[$category->getName()] = $category;
         }
         $product = new Products();
         $form = $this->createForm(ProductsType::class, $product, ['categories' => $categories]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $product->setCategoryId($form->get('category_id')->getData());
+            $product->setCreatedAt(new DateTimeImmutable());
+            $product->setStock(0);
             $productsRepository->add($product);
             return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -47,6 +47,13 @@ class CategoriesRepository extends ServiceEntityRepository
         }
     }
 
+    public function getByName($name){
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name = :val')
+            ->setParameter('val', $name)
+            ->getQuery()
+            ->getOneOrNullResult();    }
+
     // /**
     //  * @return Categories[] Returns an array of Categories objects
     //  */

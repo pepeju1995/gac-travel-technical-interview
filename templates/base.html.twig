@@ -25,7 +25,7 @@
         <!-- loader END -->
 
         <div class="wrapper">  
-            {% if app.request.getPathInfo() not in ['/login','/register'] %}
+            {% if app.request.getPathInfo() not in ['/login','/register','/success'] %}
                 {{ include('layout.html.twig') }}
             {% endif %}
 

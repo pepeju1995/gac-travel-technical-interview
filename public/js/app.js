@@ -337,6 +337,14 @@ Index Of Script
     jQuery(this).parent().toggleClass("active");
   });
 
+  jQuery(document).ready(() => {
+    jQuery(".iq-menu li").removeClass('active');
+    let path = jQuery(location).attr('pathname').replace(/\//g, '');
+    path = path.replace(/[1-9]/g, '');
+    console.log(path);
+    jQuery("#iq-sidebar-toogle-"+path).addClass(('active'));
+  })
+
 
   /*---------------------------------------------------------------------
         user toggle

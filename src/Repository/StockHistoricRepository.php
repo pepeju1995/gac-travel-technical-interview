@@ -47,6 +47,16 @@ class StockHistoricRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByUserProduct($idUser, $idProduct){
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.user_id = :user')
+            ->andWhere('s.product_id = :product')
+            ->setParameter('user', $idUser)
+            ->setParameter('product', $idProduct)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return StockHistoric[] Returns an array of StockHistoric objects
     //  */

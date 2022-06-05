@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StockHistoricController!{% endblock %}
+
+{% block body %}
+    <div class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex flex-wrap flex-wrap align-items-center justify-content-between mb-4">
+                        <div>
+                            <h4 class="mb-3">Stock History</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive mb-3">
+                        <table class="table mb-0 tbl-server-info no-footer" role="grid">
+                            <thead class="bg-white text-uppercase">
+                                <tr class="ligth ligth-data" role="row">
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Usuario</th>
+                                    <th class="text-center">Código</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stock in stock_historic %}
+                                    <tr>
+                                        <td class="text-center">{{stock.productId.name}}</td>
+                                        <td class="text-center">{{stock.stock}}</td>
+                                        <td class="text-center">{{stock.userId.username}}</td>
+                                        <td class="text-center">{{stock.id}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    
+{% endblock %}

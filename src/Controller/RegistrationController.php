@@ -47,7 +47,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_users_edit')]
+    #[Route('/{id}/user', name: 'app_users_edit')]
     public function update(Request $request, Users $user, UsersRepository $usersRepository): Response
     {
         $form = $this->createForm(RegistrationFormType::class, $user);

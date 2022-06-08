@@ -69,22 +69,27 @@ class ProductsController extends AbstractController
     public function stock(Request $request, Products $product, ProductsRepository $productsRepository, StockHistoricRepository $stockHistoricRepository): Response
     {    
         $stockActual = $product->getStock();
-        $cantidadNueva = $request->get('nuevoStock'.$product->getId());
-        if($stockActual - $cantidadNueva < 0){
-            $stock = new StockHistoric();
-            $stock->setUserId($this->getUser());
-            $stock->setProductId($product);
-            $stock->setCreatedAt(new DateTimeImmutable());
+        $modifStock = $request->get('nuevoStock'.$product->getId());
+        
+        if($modifStock < 0){
+            if($stockActual + $modifStock < 0){
+                return $this->redirectToRoute('app_products_index', [
+                    'error' => 'No se pueden eliminar mas stock del existente',
+                ]);
+            }
+        } 
+        
+        $stock = new StockHistoric();
+        $stock->setUserId($this->getUser());
+        $stock->setProductId($product);
+        $stock->setCreatedAt(new DateTimeImmutable());
 
-            $product->setStock($product->getStock() + $cantidadNueva);
-            $stock->setStock($product->getStock());
-            $productsRepository->add($product);
-            $stockHistoricRepository->add($stock);
-            return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->redirectToRoute('app_products_index', [
-            'error' => 'No se pueden eliminar mas stock del existente',
-        ]);
+        $product->setStock($stockActual + $modifStock);
+        $stock->setStock($product->getStock());
+        $productsRepository->add($product);
+        $stockHistoricRepository->add($stock);
+        return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
+        
     }
 
     #[Route('/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
